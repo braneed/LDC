@@ -12,6 +12,12 @@
 #**********************************************
 
 #**********************************************
+#   TODO:   Parse /etc/passwd entries for hash harvesting
+#           add command line arguments and interaction
+#           check system service directory permissions
+#**********************************************
+
+*
 #   Declare various variables for collection
 #   and output formats
 #**********************************************
