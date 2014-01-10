@@ -25,10 +25,10 @@
 #   Declare various variables for collection
 #   and output formats
 #**********************************************
-date=`date +%Y.%m.%d-%H%M.%Z`
-host=`hostname`
-ip=`ifconfig -a | awk /"inet addr"/'{if ( $2 !~ "127.0.0.1") print $2}' |sed -e "s/addr://" | head -1`
-PREFIX="$date_$host_$ip"
+DATE=`date +%Y.%m.%d-%H%M.%Z`
+HOST=`hostname`
+IP=`ifconfig -a | awk /"inet addr"/'{if ( $2 !~ "127.0.0.1") print $2}' |sed -e "s/addr://" | head -1`
+PREFIX="$DATE_$HOST_$IP"
 TEMP="/tmp/VZP"
 LOGS="/var/log"
 ETCDIR="/etc"
@@ -202,36 +202,36 @@ fi
 #   Locate SUID files 
 #**********************************************
 findSuid() {
-    dirs1="/usr/bin"
-    dirs2="/usr/sbin"
-    dirs3="/bin"
-    dirs4="/sbin"
+    DIRS1="/usr/bin"
+    DIRS2="/usr/sbin"
+    DIRS3="/bin"
+    DIRS4="/sbin"
     permissions="+4000"
 
-    echo $dirs1 >> $TEMP/state/setuid_files.txt
+    echo $DIRS1 >> $TEMP/state/setuid_files.txt
 
-    for file in $( find "$dirs1" -perm "$permissions" )
+    for file in $( find "$DIRS1" -perm "$permissions" )
     do
         ls -ltF --author "$file" >> $TEMP/state/setuid_files.txt
     done
 
-    echo $dirs2 >> $TEMP/state/setuid_files.txt
+    echo $DIRS2 >> $TEMP/state/setuid_files.txt
 
-    for file in $( find "$dirs2" -perm "$permissions" )
+    for file in $( find "$DIRS2" -perm "$permissions" )
     do
         ls -ltF --author "$file" >> $TEMP/state/setuid_files.txt
     done
 
-    echo $dirs3 >> $TEMP/state/setuid_files.txt
+    echo $DIRS3 >> $TEMP/state/setuid_files.txt
 
-    for file in $( find "$dirs3" -perm "$permissions" )
+    for file in $( find "$DIRS3" -perm "$permissions" )
     do
         ls -ltF --author "$file" >> $TEMP/state/setuid_files.txt
     done
 
-    echo $dirs4 >> $TEMP/state/setuid_files.txt
+    echo $DIRS4 >> $TEMP/state/setuid_files.txt
 
-    for file in $( find "$dirs4" -perm "$permissions" )
+    for file in $( find "$DIRS4" -perm "$permissions" )
     do
         ls -ltF --author "$file" >> $TEMP/state/setuid_files.txt
     done
