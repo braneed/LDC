@@ -151,6 +151,7 @@ EOT
 
 #**********************************************
 #   Argument parsing for each function
+#   will default to all if no arguments provided
 #**********************************************
 
 makeDirs
