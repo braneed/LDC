@@ -23,7 +23,7 @@
 
 #**********************************************
 #   Declare various variables for collection
-#   and output formats
+#   and output formats 
 #**********************************************
 date=`date +%Y.%m.%d-%H%M.%Z`
 host=`hostname`
