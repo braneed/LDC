@@ -17,7 +17,7 @@
 #           check system service directory permissions
 #**********************************************
 
-*
+#**********************************************
 #   Declare various variables for collection
 #   and output formats
 #**********************************************
@@ -148,6 +148,10 @@ put $ARCHIVE
 bye
 EOT
 }
+
+#**********************************************
+#   Argument parsing for each function
+#**********************************************
 
 makeDirs
 getLogs
