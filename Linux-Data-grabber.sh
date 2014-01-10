@@ -19,6 +19,7 @@
 #           parse hostlist to remove duplicate hosts for list paring
 #           fix script execution with arguments for each function \
 #           and an interactive dialog for the less CLI saavy users
+#	    add permissions checking for user writable system files
 #**********************************************
 
 #**********************************************
