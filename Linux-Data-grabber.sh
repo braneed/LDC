@@ -2,8 +2,8 @@
 #**********************************************
 #   Linux data collection script.
 #   Author Reed
-#   Version 0.2a
-#   Date 9 Jan 2014
+#   Version 0.2b
+#   Date 10 Jan 2014
 #
 #   This script is used to collect system information
 #   from Linux systems during evaluations. The
@@ -151,6 +151,7 @@ getUsers
 getCron
 getNet
 packIt
+sendPackage
 echo "Results are in $TEMP"
 
 
