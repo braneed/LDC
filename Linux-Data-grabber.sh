@@ -37,7 +37,8 @@ ARCHIVE="$PREFIX.tar"
 #**********************************************
 #   Display script usage
 #**********************************************
-usage() {
+usage()
+{
     cat << EOF
 usage: $0 options
 
@@ -67,39 +68,10 @@ EOF
 }
 
 #**********************************************
-#   Automated or Interactive?
-#   defaults to 100% automated until Erman sees it,
-#   then it becomes 100% interactive 
-#**********************************************
-parseArgs() { 
-    while getopts ab:cdilmnpstuz: arg
-    do
-        case $arg
-                a)  runAll  ;;
-                b)  $TEMP=$OPTARG   ;;
-                c)  getConfigs  ;;
-                d)  getCron ;;
-                f)  $FTPHOST=$OPTARG    ;;
-                g)  $FTPUSER=$OPTARG    ;;
-                h)  $FTPPASS=$OPTARG    ;; 
-                i)  runInteractive  ;;
-                l)  getLogs ;;
-                m)  checkLogins ;;
-                n)  getNet  ;;
-                p)  getPackages ;;
-                s)  getState    ;;
-                t)  findSuid    ;;
-                u)  getUsers    ;;
-                z)  packIt $ARCHIVE=$OPTARG ;;
-                ?)  usage   ;;
-        esac
-    done
-}
-
-#**********************************************
 #   Create directories for data collection
 #**********************************************
 makeDirs() {
+echo "Creating $TEMP tree"
 mkdir $TEMP
 mkdir $TEMP/etc
 mkdir $TEMP/state
@@ -108,6 +80,7 @@ mkdir $TEMP/state
 #   Collect log files and put them in $TEMP/logs
 #**********************************************
 getLogs() {
+echo "Collecting $LOGS in $TEMP/logs"
 cp -R $LOGS $TEMP
 dmesg >> $TEMP/state/dmesg.txt
 }
@@ -116,6 +89,7 @@ dmesg >> $TEMP/state/dmesg.txt
 #   Collect config files and put them in $TEMP/etc
 #**********************************************
 getConfigs() {
+echo "Collecting $ETCDIR in $TEMP/etc"
 cp -R $ETCDIR $TEMP
 }
 
@@ -124,6 +98,7 @@ cp -R $ETCDIR $TEMP
 #   including currently mounted drives
 #**********************************************
 getState() {
+echo "Collecting system state info into $TEMP/state"
 uname -a >> $TEMP/state/uname.txt
 lsb_release -a >> $TEMP/state/lsb_release.txt
 lsmod >> $TEMP/state/loaded_modules.txt
@@ -143,7 +118,8 @@ date -u >> $TEMP/state/current_date_UTC.txt
 #   User information from the system
 #**********************************************
 getUsers() {
-USERS=`awk '{ if ($3 >> 499) print $1}' FS=":" /etc/passwd`
+echo "Collecting user info into $TEMP/state"
+USERS=`awk '{ if ($3 > 499) print $1}' FS=":" /etc/passwd`
 for user in $USERS; do
         echo $user >> $TEMP/state/user_information.txt && chage -l $user >> $TEMP/state/user_information.txt
 done
@@ -156,6 +132,7 @@ cp /etc/shadow $TEMP/state
 #   Collect network and route info for all devices
 #**********************************************
 getNet() {
+echo "Collecting network information into $TEMP/state"
 netstat -rn >> $TEMP/state/routes.txt
 netstat -na | grep LISTEN\   >> $TEMP/state/network_pids.txt
 netstat -na | grep CONNECTED\   >> $TEMP/state/connected_sessions.txt
@@ -177,6 +154,7 @@ ifconfig -a >> $TEMP/state/interface_configs.txt
 #   Collect installed packages and process lists
 #**********************************************
 getPackages() {
+echo "Collecting package information into $TEMP/state"
 rpm -qa --last >> $TEMP/state/installed_packages.txt                
 chkconfig --list | grep ":on" >> $TEMP/state/configured_services.txt 
 ps axuw --forest >> $TEMP/state/process_list.txt
@@ -187,6 +165,7 @@ lsof >> $TEMP/state/open_files.txt
 #   Collect crontab information
 #**********************************************
 getCron() {
+echo "Collecting cron information into $TEMP/state"
 CRONS=`ls /var/spool/cron/* 2>> /dev/null`
 if [ "$CRONS" != "" ]; then
    for file in $CRONS ; do
@@ -207,6 +186,8 @@ findSuid() {
     dirs3="/bin"
     dirs4="/sbin"
     permissions="+4000"
+
+echo "Locating SetUID files in $DIRS1 $DIRS2 $DIRS3 $DIRS4 with permissions $PERMISSIONS"
 
     echo $dirs1 >> $TEMP/state/setuid_files.txt
 
@@ -243,6 +224,7 @@ findSuid() {
 #   an attack has occured
 #**********************************************
 checkLogins() {
+echo "Checking login information and saving to $TEMP/state"
     last -w >> $TEMP/state/login_history.txt
     lastb -w >> $TEMP/state/failed_login_history.txt
     last reboot >> $TEMP/state/reboot_history.txt
@@ -253,6 +235,7 @@ checkLogins() {
 #   Package up $TEMP
 #**********************************************
 packIt() {
+echo "Packaging the $TEMP folder to $ARCHIVE"
 cd $TEMP
 tar -cf $ARCHIVE state etc log
 }
@@ -288,4 +271,70 @@ findSuid
 checkLogins
 packIt
 }
-echo "Results are in $TEMP"
+
+#echo "Results are in $TEMP"
+
+#**********************************************
+#   Automated or Interactive?
+#   defaults to 100% automated until Erman sees it,
+#   then it becomes 100% interactive
+#**********************************************
+#parseArgs() {
+while getopts "ab:cdilmnpstuz:?" OPTIONS
+    do
+        case "$OPTIONS" in
+                a)
+                    runAll
+                    ;;
+                b)
+                    $TEMP=$OPTARG
+                    ;;
+                c)
+                    getConfigs
+                    ;;
+                d)
+                    getCron
+                    ;;
+                f)
+                    $FTPHOST=$OPTARG
+                    ;;
+                g)
+                    $FTPUSER=$OPTARG
+                    ;;
+                h)
+                    $FTPPASS=$OPTARG
+                    ;;
+                i)
+                    runInteractive
+                    ;;
+                l)
+                    getLogs
+                    ;;
+                m)
+                    checkLogins
+                    ;;
+                n)
+                    getNet
+                    ;;
+                p)
+                    getPackages
+                    ;;
+                s)
+                    getState
+                    ;;
+                t)
+                    findSuid
+                    ;;
+                u)
+                    getUsers
+                    ;;
+                z)
+                    packIt $ARCHIVE=$OPTARG
+                    ;;
+                ?)
+                    usage
+                    exit
+                    ;;
+    esac
+done
+#}
