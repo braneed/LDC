@@ -26,10 +26,12 @@
 #   Declare various variables for collection
 #   and output formats 
 #**********************************************
-date=`date +%Y.%m.%d-%H%M.%Z`
-host=`hostname`
-ip=`ifconfig -a | awk /"inet addr"/'{if ( $2 !~ "127.0.0.1") print $2}' |sed -e "s/addr://" | head -1`
-PREFIX="$date_$host_$ip"
+DATE=`date +%Y.%m.%d-%H%M.%Z`
+echo "date: $DATE"
+HOST=`hostname`
+IP=`ifconfig -a | awk /"inet addr"/'{if ( $2 !~ "127.0.0.1") print $2}' |sed -e "s/addr://" | head -1`
+PREFIX=$DATE_$HOST_$IP
+echo $PREFIX
 TEMP="/tmp/VZP"
 LOGS="/var/log"
 ETCDIR="/etc"
@@ -285,7 +287,9 @@ runInteractive() {
 #   defaults to 100% automated until Erman sees it,
 #   then it becomes 100% interactive
 #**********************************************
-#parseArgs() {
+echo $DATE_$HOST_$IP
+echo $ARCHIVE
+echo "prefix: $PREFIX"
 while getopts "ab:cdilmnpstuz:?" OPTIONS
     do
         case "$OPTIONS" in
@@ -294,7 +298,7 @@ while getopts "ab:cdilmnpstuz:?" OPTIONS
                     runAll
                     ;;
                 b)
-                    $TEMP=$OPTARG
+                    TEMP="$OPTARG"
                     ;;
                 c)
                     getConfigs
@@ -303,13 +307,13 @@ while getopts "ab:cdilmnpstuz:?" OPTIONS
                     getCron
                     ;;
                 f)
-                    $FTPHOST=$OPTARG
+                    FTPHOST=$OPTARG
                     ;;
                 g)
-                    $FTPUSER=$OPTARG
+                    FTPUSER=$OPTARG
                     ;;
                 h)
-                    $FTPPASS=$OPTARG
+                    FTPPASS=$OPTARG
                     ;;
                 i)
                     runInteractive
@@ -337,7 +341,8 @@ while getopts "ab:cdilmnpstuz:?" OPTIONS
                     getUsers
                     ;;
                 z)
-                    packIt $ARCHIVE=$OPTARG
+                    packIt ARCHIVE=$OPTARG
+                    echo $ARCHIVE
                     ;;
                 ?)
                     usage
@@ -345,5 +350,3 @@ while getopts "ab:cdilmnpstuz:?" OPTIONS
                     ;;
     esac
 done
-
-#}
