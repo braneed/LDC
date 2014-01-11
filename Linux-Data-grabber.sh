@@ -273,7 +273,12 @@ checkLogins
 packIt
 }
 
-#echo "Results are in $TEMP"
+#**********************************************
+#   Interactive mode, ACTIVATE!!!!!!!!!
+#**********************************************
+runInteractive() {
+   echo "Not yet implemented, sorry Merman!"
+}
 
 #**********************************************
 #   Automated or Interactive?
