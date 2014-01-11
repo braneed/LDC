@@ -12,7 +12,8 @@
 #**********************************************
 
 #**********************************************
-#   TODO:   Parse /etc/passwd entries for hash harvesting
+#   TODO:
+#           Parse /etc/passwd entries for hash harvesting
 #           add command line arguments and interaction
 #           check system service directory permissions
 #           make setuid check array to eliminate extra for loops
@@ -181,38 +182,38 @@ fi
 #   Locate SUID files 
 #**********************************************
 findSuid() {
-    dirs1="/usr/bin"
-    dirs2="/usr/sbin"
-    dirs3="/bin"
-    dirs4="/sbin"
-    permissions="+4000"
+    DIRS1="/usr/bin"
+    DIRS2="/usr/sbin"
+    DIRS3="/bin"
+    DIRS4="/sbin"
+    PERMISSIONS="+4000"
 
 echo "Locating SetUID files in $DIRS1 $DIRS2 $DIRS3 $DIRS4 with permissions $PERMISSIONS"
 
-    echo $dirs1 >> $TEMP/state/setuid_files.txt
+    echo $DIRS1 >> $TEMP/state/setuid_files.txt
 
-    for file in $( find "$dirs1" -perm "$permissions" )
+    for file in $( find "$DIRS1" -perm "$PERMISSIONS" )
     do
         ls -ltF --author "$file" >> $TEMP/state/setuid_files.txt
     done
 
     echo $dirs2 >> $TEMP/state/setuid_files.txt
 
-    for file in $( find "$dirs2" -perm "$permissions" )
+    for file in $( find "$DIRS2" -perm "$PERMISSIONS" )
     do
         ls -ltF --author "$file" >> $TEMP/state/setuid_files.txt
     done
 
     echo $dirs3 >> $TEMP/state/setuid_files.txt
 
-    for file in $( find "$dirs3" -perm "$permissions" )
+    for file in $( find "$DIRS3" -perm "$PERMISSIONS" )
     do
         ls -ltF --author "$file" >> $TEMP/state/setuid_files.txt
     done
 
     echo $dirs4 >> $TEMP/state/setuid_files.txt
 
-    for file in $( find "$dirs4" -perm "$permissions" )
+    for file in $( find "$DIRS4" -perm "$PERMISSIONS" )
     do
         ls -ltF --author "$file" >> $TEMP/state/setuid_files.txt
     done
@@ -284,6 +285,7 @@ while getopts "ab:cdilmnpstuz:?" OPTIONS
     do
         case "$OPTIONS" in
                 a)
+                    makeDirs
                     runAll
                     ;;
                 b)
@@ -323,6 +325,7 @@ while getopts "ab:cdilmnpstuz:?" OPTIONS
                     getState
                     ;;
                 t)
+                    makeDirs
                     findSuid
                     ;;
                 u)
@@ -337,4 +340,5 @@ while getopts "ab:cdilmnpstuz:?" OPTIONS
                     ;;
     esac
 done
+
 #}
