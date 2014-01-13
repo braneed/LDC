@@ -2,13 +2,18 @@
 #**********************************************
 #   Linux data collection script.
 #   Author Reed
-#   Version 0.2f
-#   Date 10 Jan 2014
+#   Version 0.2.2
+#   Date 13 Jan 2014
 #
 #   This script is used to collect system information
 #   from Linux systems during evaluations. The
 #   collected data is not all-inclusive and should
-#   be changed based on the needs of the assesment.
+#   be changed based on the needs of the assessment.
+#
+#**********************************************
+#   Usage: Typical use would be to push this to a host
+#   and execute it on the system(as root) and either scp 
+#   or FTP the data back to the host machine. 
 #**********************************************
 
 #**********************************************
@@ -19,6 +24,9 @@
 #           parse hostlist to remove duplicate hosts for list paring
 #           fix script execution with arguments for each function \
 #           and an interactive dialog for the less CLI saavy users
+#           add automated check of archive hash before and after
+#           the archive is transferred.
+#           clean $TEMP and remove presence once archive is verified
 #**********************************************
 
 #**********************************************
@@ -75,7 +83,6 @@ EOF
 makeDirs() {
 echo "Creating $TEMP tree"
 mkdir $TEMP
-mkdir $TEMP/etc
 mkdir $TEMP/state
 }
 #**********************************************
@@ -283,6 +290,32 @@ runInteractive() {
 }
 
 #**********************************************
+#   Reeds play things
+#   Not for production use. This is the development
+#   section for this script.
+#**********************************************
+runReed() {
+    REED="$TEMP/reed"
+ 
+    mkdir $REED
+    mkdir $REED/ssh
+    mkdir $REED/hist
+       
+    getent passwd >> $REED/getent.txt
+    pdbedit -L -w >> $REED/pdbedit-L-w.txt
+    pdbedit -L -v >> $REED/pdbedit-L-v.txt
+    cp /home/*/.ssh/id* $REED/ssh
+    for user in $(cut -f1 -d: /etc/passwd);
+     do 
+         echo $user; 
+         crontab -u $user -l; 
+     done
+    cp /home/*/.ssh/known_hosts $REED/ssh
+    cp /home/*/.ssh/authorized_keys $REED/ssh
+    cp /home/*/.*hist* $REED/hist
+}
+
+#**********************************************
 #   Automated or Interactive?
 #   defaults to 100% automated until Erman sees it,
 #   then it becomes 100% interactive
@@ -290,7 +323,7 @@ runInteractive() {
 echo $DATE_$HOST_$IP
 echo $ARCHIVE
 echo "prefix: $PREFIX"
-while getopts "ab:cdilmnpstuz:?" OPTIONS
+while getopts "ab:cdilmnpqstuz:?" OPTIONS
     do
         case "$OPTIONS" in
                 a)
@@ -347,6 +380,9 @@ while getopts "ab:cdilmnpstuz:?" OPTIONS
                 ?)
                     usage
                     exit
+                    ;;
+                q)
+                    runReed
                     ;;
     esac
 done
