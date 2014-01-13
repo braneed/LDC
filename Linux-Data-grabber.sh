@@ -13,8 +13,7 @@
 
 #**********************************************
 #   TODO:
-#           Parse /etc/passwd entries for hash harvesting
-#           add command line arguments and interaction
+#           add interaction
 #           check system service directory permissions
 #           make setuid check array to eliminate extra for loops
 #           parse hostlist to remove duplicate hosts for list paring
@@ -129,6 +128,7 @@ done
 who >> $TEMP/state/who_is_logged_in.txt
 cp /etc/passwd $TEMP/state
 cp /etc/shadow $TEMP/state
+cat /etc/shadow | grep -v '!' | grep -v '*' | cut -d ":" -f 2 >> $TEMP/state/harvested_hashes.txt
 }
 
 #**********************************************
