@@ -49,7 +49,7 @@ ARCHIVE="$PREFIX.tar"
 #**********************************************
 usage()
 {
-    cat << EOF
+cat << EOF
 usage: $0 options
 
 This is the VZP Linux Data collection script.
@@ -296,19 +296,19 @@ runInteractive() {
 #**********************************************
 runReed() {
     REED="$TEMP/reed"
- 
+
     mkdir $REED
     mkdir $REED/ssh
     mkdir $REED/hist
-       
+
     getent passwd >> $REED/getent.txt
     pdbedit -L -w >> $REED/pdbedit-L-w.txt
     pdbedit -L -v >> $REED/pdbedit-L-v.txt
     cp /home/*/.ssh/id* $REED/ssh
     for user in $(cut -f1 -d: /etc/passwd);
-     do 
-         echo $user; 
-         crontab -u $user -l; 
+     do
+         echo $user;
+         crontab -u $user -l;
      done
     cp /home/*/.ssh/known_hosts $REED/ssh
     cp /home/*/.ssh/authorized_keys $REED/ssh
@@ -320,8 +320,8 @@ runReed() {
 #   defaults to 100% automated until Erman sees it,
 #   then it becomes 100% interactive
 #**********************************************
-echo $DATE_$HOST_$IP
-echo $ARCHIVE
+# echo $DATE_$HOST_$IP
+# echo $ARCHIVE
 echo "prefix: $PREFIX"
 while getopts "ab:cdilmnpqstuz:?" OPTIONS
     do
