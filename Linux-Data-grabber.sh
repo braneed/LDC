@@ -2,8 +2,8 @@
 #**********************************************
 #   Linux data collection script.
 #   Author Reed
-#   Version 0.2.3
-#   Date 14 Jan 2014
+#   Version 0.2.4f
+#   Date 16 Jan 2014
 #
 #   This script is used to collect system information
 #   from Linux systems during evaluations. The
@@ -355,9 +355,6 @@ while getopts "ab:cdilmnpqstuz:?" OPTIONS
                 ?)
                     usage
                     exit
-                    ;;
-                q)
-                    runReed
                     ;;
     esac
 done
