@@ -2,8 +2,8 @@
 #**********************************************
 #   Linux data collection script.
 #   Author Reed
-#   Version 0.2.2
-#   Date 13 Jan 2014
+#   Version 0.2.3
+#   Date 14 Jan 2014
 #
 #   This script is used to collect system information
 #   from Linux systems during evaluations. The
@@ -27,6 +27,7 @@
 #           add automated check of archive hash before and after
 #           the archive is transferred.
 #           clean $TEMP and remove presence once archive is verified
+#           fix automation, its pissing me off
 #**********************************************
 
 #**********************************************
