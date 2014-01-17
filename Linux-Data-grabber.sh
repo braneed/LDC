@@ -290,32 +290,6 @@ runInteractive() {
 }
 
 #**********************************************
-#   Reeds play things
-#   Not for production use. This is the development
-#   section for this script.
-#**********************************************
-runReed() {
-    REED="$TEMP/reed"
-
-    mkdir $REED
-    mkdir $REED/ssh
-    mkdir $REED/hist
-
-    getent passwd >> $REED/getent.txt
-    pdbedit -L -w >> $REED/pdbedit-L-w.txt
-    pdbedit -L -v >> $REED/pdbedit-L-v.txt
-    cp /home/*/.ssh/id* $REED/ssh
-    for user in $(cut -f1 -d: /etc/passwd);
-     do
-         echo $user;
-         crontab -u $user -l;
-     done
-    cp /home/*/.ssh/known_hosts $REED/ssh
-    cp /home/*/.ssh/authorized_keys $REED/ssh
-    cp /home/*/.*hist* $REED/hist
-}
-
-#**********************************************
 #   Automated or Interactive?
 #   defaults to 100% automated until Erman sees it,
 #   then it becomes 100% interactive
