@@ -58,15 +58,15 @@ Place this script on a Linux machine and run as root
 or an administrative user.
 
 OPTIONS:
-    -a  Run everything
+    -a  Run everything (Default mode)
     -i  Run in interactive mode (for Erman)
     -b  Set TEMP dir to this (defaults to -b /tmp/VZP)
-    -c  Collect Configs
-    -d  Collect Cron information
+    -c  Collect Configs (cp -R /etc )
+    -d  Collect Cron information (cp -R /etc/cron* )
     -f  FTP archive to HOST (-f 10.0.0.1)
     -g  FTP username (defaults to -g COTF)
     -h  FTP password (defaults to -h cotf)
-    -l  Collect logs
+    -l  Collect logs (cp -R /var/log )
     -m  Collect login history
     -n  Collect network information
     -p  Collect installed package information
