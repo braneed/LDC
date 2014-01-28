@@ -1,9 +1,9 @@
 #!/bin/bash
 #**********************************************
 #   Linux data collection script.
-#   Author Reed
-#   Version 0.2.4f
-#   Date 16 Jan 2014
+#   Authored by Sir Reedrik Von Reedheim
+#   Version 0.2.6
+#   Date 28 Jan 2014
 #
 #   This script is used to collect system information
 #   from Linux systems during evaluations. The
