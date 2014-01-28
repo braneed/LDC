@@ -290,13 +290,12 @@ packIt
 #   Interactive mode, ACTIVATE!!!!!!!!!
 #**********************************************
 runInteractive() {
-   echo "Not yet implemented, sorry Merman!"
+   echo "Not yet implemented, sorry Merman! Working on this during Snowmageddon 2k14"
 }
 
 #**********************************************
 #   Automated or Interactive?
-#   defaults to 100% automated until Erman sees it,
-#   then it becomes 100% interactive
+#   defaults to 100% automated until Erman sees it
 #**********************************************
 # echo $DATE_$HOST_$IP
 # echo $ARCHIVE
