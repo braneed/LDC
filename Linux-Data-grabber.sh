@@ -35,12 +35,12 @@ DATE=`date +%Y.%m.%d-%H%M.%Z`
 echo "date: $DATE"
 HOST=`hostname`
 IP=`ifconfig -a | awk /"inet addr"/'{if ( $2 !~ "127.0.0.1") print $2}' |sed -e "s/addr://" | head -1`
-PREFIX=$DATE_$HOST_$IP
-echo $PREFIX
+PREFIX=$DATE"_"$HOST"_"$IP
 TEMP="/tmp/VZP"
 LOGS="/var/log"
 ETCDIR="/etc"
-ARCHIVE=$PREFIX.tar
+ARCHIVE=$PREFIX".tar"
+echo "Archive:" $ARCHIVE
 
 #**********************************************
 #   Display script usage
@@ -287,7 +287,7 @@ packIt
 #**********************************************
 # echo $DATE_$HOST_$IP
 # echo $ARCHIVE
-echo "prefix: $PREFIX"
+# echo "prefix: $PREFIX"
 while getopts "ab:cdilmnpqstuz:?" OPTIONS
     do
         case "$OPTIONS" in
