@@ -87,7 +87,7 @@ mkdir $TEMP/state 2>&1
 #**********************************************
 getLogs() {
 echo "Collecting $LOGS in $TEMP/logs"
-cp -R $LOGS $TEMP
+cp -R $LOGS $TEMP 2>$1
 dmesg >> $TEMP/state/dmesg.txt
 }
 
@@ -96,7 +96,7 @@ dmesg >> $TEMP/state/dmesg.txt
 #**********************************************
 getConfigs() {
 echo "Collecting $ETCDIR in $TEMP/etc"
-cp -R $ETCDIR $TEMP
+cp -R $ETCDIR $TEMP 2>&1
 }
 
 #**********************************************
