@@ -40,7 +40,7 @@ echo $PREFIX
 TEMP="/tmp/VZP"
 LOGS="/var/log"
 ETCDIR="/etc"
-ARCHIVE="$PREFIX.tar"
+ARCHIVE=$PREFIX.tar
 
 #**********************************************
 #   Display script usage
