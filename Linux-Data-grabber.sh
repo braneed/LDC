@@ -79,8 +79,8 @@ EOF
 #**********************************************
 makeDirs() {
 echo "Creating $TEMP tree"
-mkdir $TEMP
-mkdir $TEMP/state
+mkdir $TEMP 2>&1
+mkdir $TEMP/state 2>&1
 }
 #**********************************************
 #   Collect log files and put them in $TEMP/logs
