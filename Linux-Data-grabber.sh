@@ -12,8 +12,8 @@
 #
 #**********************************************
 #   Usage: Typical use would be to push this to a host
-#   and execute it on the system(as root) and either scp 
-#   or FTP the data back to the host machine. 
+#   and execute it on the system(as root) and either scp
+#   or FTP the data back to the host machine.
 #**********************************************
 
 #**********************************************
