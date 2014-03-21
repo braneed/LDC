@@ -1,3 +1,28 @@
-This is the VZP Linux data collection script.
-Its neat.
+README for the VZP Linux data collection script
+
+This script will collect system information from modern Linux systems that can be used
+to evaluate the security posture and assist in identifying system configuration flaws.
+
+The script will retrieve the following from the system:
+
+    All logs contained in /var (or a specified alternate directory)
+    All config files located in /etc (or a specified alternate directory)
+    All crontab information on the system
+    Login history including successful and failed login attempts, IP login attempt was
+        from, and last login from all user accounts on the system (to include services)
+    Network information from the system, this includes hostname information, all connected
+        sessions, listening sockets, network service PIDs, firewall rulesets, routes, and
+        stats on any network device discovered
+    Installed package history (currently supports RPM based distros)
+    System state information including date, time, free space, home directories, installed
+        devices, loaded kernel modules, LSB information, mounted devices, kernel version,
+        and user information for the script executor
+    Locates all SUID programs on the system
+    Collects hashes from /etc/shadow, currently logged in users, the passwd/shadow files,
+        account policy for each user on the system, and the /etc/sudoers file
+
+This script will also FTP the archive of data back to the point of origin, or any other
+FTP server specified during execution.
+
+TODO is in the script.
 
