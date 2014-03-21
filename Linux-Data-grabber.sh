@@ -1,9 +1,9 @@
 #!/bin/bash
 #**********************************************
 #   Linux data collection script.
-#   Authored by Sir Reedrik Von Reedheim
-#   Version 0.2.6
-#   Date 28 Jan 2014
+#   Written by eleed
+#   Version 0.0.1c-devel
+#   Date 21 Mar 2014
 #
 #   This script is used to collect system information
 #   from Linux systems during evaluations. The
@@ -20,14 +20,11 @@
 #   TODO:
 #           add interaction
 #           check system service directory permissions
-#           make setuid check array to eliminate extra for loops
 #           parse hostlist to remove duplicate hosts for list paring
-#           fix script execution with arguments for each function \
-#           and an interactive dialog for the less CLI saavy users
-#           add automated check of archive hash before and after
+#           fix script execution with arguments for each function
+#           add automated check of archive hash before and after \
 #           the archive is transferred.
 #           clean $TEMP and remove presence once archive is verified
-#           fix automation, its pissing me off
 #**********************************************
 
 #**********************************************
@@ -59,7 +56,6 @@ or an administrative user.
 
 OPTIONS:
     -a  Run everything (Default mode)
-    -i  Run in interactive mode (for Erman)
     -b  Set TEMP dir to this (defaults to -b /tmp/VZP)
     -c  Collect Configs (cp -R /etc )
     -d  Collect Cron information (cp -R /etc/cron* )
@@ -287,15 +283,7 @@ packIt
 }
 
 #**********************************************
-#   Interactive mode, ACTIVATE!!!!!!!!!
-#**********************************************
-runInteractive() {
-   echo "Not yet implemented, sorry Merman! Working on this during Snowmageddon 2k14"
-}
-
-#**********************************************
-#   Automated or Interactive?
-#   defaults to 100% automated until Erman sees it
+#   Display usage information
 #**********************************************
 # echo $DATE_$HOST_$IP
 # echo $ARCHIVE
@@ -324,9 +312,6 @@ while getopts "ab:cdilmnpqstuz:?" OPTIONS
                     ;;
                 h)
                     FTPPASS=$OPTARG
-                    ;;
-                i)
-                    runInteractive
                     ;;
                 l)
                     getLogs
