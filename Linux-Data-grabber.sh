@@ -2,8 +2,8 @@
 #**********************************************
 #   Linux data collection script.
 #   Written by eleed
-#   Version 0.0.1c-devel
-#   Date 21 Mar 2014
+#   Version 0.0.1f-devel
+#   Date 05 Apr 2014
 #
 #   This script is used to collect system information
 #   from Linux systems during evaluations. The
@@ -14,6 +14,14 @@
 #   Usage: Typical use would be to push this to a host
 #   and execute it on the system(as root) and either scp 
 #   or FTP the data back to the host machine. 
+#**********************************************
+
+#**********************************************
+#   CHANGELOG:
+#	    fixed the $PREFIX to correctly save the file
+#	    as DATE_HOSTNAME_IP.tar
+#	    added gzip compression to make the archive
+#	    smaller.
 #**********************************************
 
 #**********************************************
@@ -35,12 +43,12 @@ DATE=`date +%Y.%m.%d-%H%M.%Z`
 echo "date: $DATE"
 HOST=`hostname`
 IP=`ifconfig -a | awk /"inet addr"/'{if ( $2 !~ "127.0.0.1") print $2}' |sed -e "s/addr://" | head -1`
-PREFIX=$DATE_$HOST_$IP
+PREFIX=$DATE"_"$HOST"_"$IP
 echo $PREFIX
 TEMP="/tmp/VZP"
 LOGS="/var/log"
 ETCDIR="/etc"
-ARCHIVE="$PREFIX.tar"
+ARCHIVE=$PREFIX".tar"
 
 #**********************************************
 #   Display script usage
@@ -247,7 +255,7 @@ echo "Checking login information and saving to $TEMP/state"
 packIt() {
 echo "Packaging the $TEMP folder to $ARCHIVE"
 cd $TEMP
-tar -cf $ARCHIVE state etc log
+tar -czf $ARCHIVE state etc log
 }
 
 #**********************************************
