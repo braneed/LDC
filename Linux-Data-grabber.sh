@@ -158,6 +158,9 @@ ifconfig -a >> $TEMP/state/interface_configs.txt
 #   Added listening services in list sorted by port and full info about the service
 lsof -i -nlP | awk '{print $1, $8, $9}' | sort -u >> $TEMP/state/services_unsorted.txt
 lsof -i -nlP | awk '{print $9, $8, $1}' | sed 's/.*://' | sort -u >> $TEMP/state/services_sorted.txt
+
+#   Added check for Windigo infected SSH Server
+ssh -G 2>&1 | grep -e illegal -e unknown && echo "Clean" >> $TEMP/state/Windigo.txt || echo "Infected" >> $TEMP/state/Windigo.txt
 }
 
 #**********************************************
