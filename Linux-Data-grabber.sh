@@ -251,6 +251,7 @@ packIt() {
 echo "Packaging the $TEMP folder to $ARCHIVE"
 cd $TEMP
 tar -cf $ARCHIVE state etc log
+chmod 666 $ARCHIVE
 }
 
 #**********************************************
