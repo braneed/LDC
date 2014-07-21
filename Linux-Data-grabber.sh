@@ -2,8 +2,8 @@
 #**********************************************
 #   Linux data collection script.
 #   Written by eleed
-#   Version 0.0.1c-devel
-#   Date 21 Mar 2014
+#   Version 0.0.2-master
+#   Date 21 Jul 2014
 #
 #   This script is used to collect system information
 #   from Linux systems during evaluations. The
@@ -87,7 +87,7 @@ mkdir $TEMP/state 2>&1
 #**********************************************
 getLogs() {
 echo "Collecting $LOGS in $TEMP/logs"
-cp -R $LOGS $TEMP 2>$1
+cp -R $LOGS $TEMP 2>&1
 dmesg >> $TEMP/state/dmesg.txt
 }
 
@@ -252,6 +252,7 @@ echo "Packaging the $TEMP folder to $ARCHIVE"
 cd $TEMP
 tar -cf $ARCHIVE state etc log
 chmod 666 $ARCHIVE
+chmod 777 $TEMP
 }
 
 #**********************************************
