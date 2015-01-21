@@ -25,7 +25,3 @@ This script will also FTP the archive of data back to the point of origin, or an
 FTP server specified during execution.
 
 TODO is in the script.
-
-tarfile of example output from a fresh CentOS install is located at:
-http://www.braneed.com/2014.03.21-1210.EDT_CentOS.voodoo_10.0.2.15.tar
-tar file is 36MB
