@@ -2,14 +2,15 @@
 #**********************************************
 #   Linux data collection script.
 #   Written by eleed
-#   Version 0.0.1f-devel
-#   Date 05 Apr 2014
+#   Version 0.0.1g-devel
+#   Date 30 Mar 2015
 #
 #   This script is used to collect system information
 #   from Linux systems during evaluations. The
 #   collected data is not all-inclusive and should
 #   be changed based on the needs of the assessment.
-#
+#**********************************************
+
 #**********************************************
 #   Usage: Typical use would be to push this to a host
 #   and execute it on the system(as root) and either scp 
@@ -18,6 +19,11 @@
 
 #**********************************************
 #   CHANGELOG:
+#   March 30 2015
+#       Added /bash_history and ~/.ssh/id_rsa harvesting
+#       
+#
+#   April 2014
 #	    fixed the $PREFIX to correctly save the file
 #	    as DATE_HOSTNAME_IP.tar
 #	    added gzip compression to make the archive
@@ -89,6 +95,8 @@ makeDirs() {
 echo "Creating $TEMP tree"
 mkdir $TEMP
 mkdir $TEMP/state
+mkdir $TEMP/state/ssh
+mkdir $TEMP/state/history
 }
 #**********************************************
 #   Collect log files and put them in $TEMP/logs
@@ -136,6 +144,9 @@ echo "Collecting user info into $TEMP/state"
 USERS=`awk '{ if ($3 > 499) print $1}' FS=":" /etc/passwd`
 for user in $USERS; do
         echo $user >> $TEMP/state/user_information.txt && chage -l $user >> $TEMP/state/user_information.txt
+# March 2015
+        cp -R /home/$user/.ssh $TEMP/state/ssh/$user
+        cp /home/$user/.bash_history $TEMP/state/history
 done
 who >> $TEMP/state/who_is_logged_in.txt
 cp /etc/passwd $TEMP/state
