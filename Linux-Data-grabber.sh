@@ -128,6 +128,7 @@ echo "Collecting user info into $TEMP/state"
 USERS=`awk '{ if ($3 > 499) print $1}' FS=":" /etc/passwd`
 for user in $USERS; do
         echo $user >> $TEMP/state/user_information.txt && chage -l $user >> $TEMP/state/user_information.txt
+        su $user -c sudo -l > $TEMP/state/sudo_commands.txt
 done
 who >> $TEMP/state/who_is_logged_in.txt
 cp /etc/passwd $TEMP/state
