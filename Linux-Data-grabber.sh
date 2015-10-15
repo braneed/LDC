@@ -3,7 +3,7 @@
 #   Linux data collection script.
 #   Written by eleed
 #   Version 0.0.1g-devel
-#   Date 30 Mar 2015
+#   Date 19 Oct 2015
 #
 #   This script is used to collect system information
 #   from Linux systems during evaluations. The
@@ -19,15 +19,9 @@
 
 #**********************************************
 #   CHANGELOG:
-#   March 30 2015
-#       Added /bash_history and ~/.ssh/id_rsa harvesting
+#   October 19 2015
+#       Added ~/.bash_history and ~/.ssh/id_rsa harvesting
 #       
-#
-#   April 2014
-#	    fixed the $PREFIX to correctly save the file
-#	    as DATE_HOSTNAME_IP.tar
-#	    added gzip compression to make the archive
-#	    smaller.
 #**********************************************
 
 #**********************************************
@@ -141,13 +135,12 @@ date -u >> $TEMP/state/current_date_UTC.txt
 #**********************************************
 getUsers() {
 echo "Collecting user info into $TEMP/state"
-USERS=`awk '{ if ($3 > 499) print $1}' FS=":" /etc/passwd`
-for user in $USERS; do
-        echo $user >> $TEMP/state/user_information.txt && chage -l $user >> $TEMP/state/user_information.txt
-# March 2015
-        cp -R /home/$user/.ssh $TEMP/state/ssh/$user
-        cp /home/$user/.bash_history $TEMP/state/history
-done
+ls /home > $TEMP/state/home_directories.txt
+HOMEDIR=`cat $TEMP/states/home_directories.txt`
+for homedir in $HOMEDIR; do
+    mkdir $TEMP/state/$homedir
+    cp -R $homedir/.ssh $TEMP/state/$homedir
+    cp $homedir/.bash_history $TEMP/state/$homedir
 who >> $TEMP/state/who_is_logged_in.txt
 cp /etc/passwd $TEMP/state
 cp /etc/shadow $TEMP/state
